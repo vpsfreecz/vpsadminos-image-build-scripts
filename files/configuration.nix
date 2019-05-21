@@ -17,7 +17,7 @@ in
         <nixpkgs/nixos/modules/profiles/minimal.nix>
         <nixpkgs/nixos/modules/virtualisation/container-config.nix>
         <nixpkgs/nixos/modules/installer/cd-dvd/channel.nix>
-        ./gen/clone-config.nix # optionally include itself
+        # ./gen/clone-config.nix # optionally include itself
       ];
 
     services.openssh.enable = true;
