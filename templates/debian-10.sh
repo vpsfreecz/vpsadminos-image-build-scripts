@@ -24,6 +24,10 @@ SOURCES
 configure-append <<EOF
 sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 ln -s /dev/null /etc/systemd/system/proc-sys-fs-binfmt_misc.automount
+
+# Debian 10 by default uses nftables, which aren't supported on OpenVZ
+update-alternatives --set iptables /usr/sbin/iptables-legacy
+update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 EOF
 
 run-configure
