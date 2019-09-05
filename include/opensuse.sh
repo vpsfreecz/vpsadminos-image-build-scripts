@@ -2,29 +2,30 @@
 
 . $BASEDIR/include/common.sh
 
-if [ $DISTNAME == "suse-leap" ]; then
-	REPOSITORY=http://download.opensuse.org/distribution/leap/$RELVER/repo/oss/
-	UPDATES=http://download.opensuse.org/update/leap/$RELVER/oss/
-elif [ $DISTNAME == "suse-tumbleweed" ]; then
-	REPOSITORY=http://download.opensuse.org/tumbleweed/repo/oss/
-	UPDATES=http://download.opensuse.org/update/tumbleweed/
-else
-	REPOSITORY=http://download.opensuse.org/distribution/$RELVER/repo/oss/
-	UPDATES=http://download.opensuse.org/update/$RELVER/
-fi
+if [ "$SPIN" == "leap" ]; then
+       REPOSITORY=http://download.opensuse.org/distribution/leap/$SPINVER/repo/oss/
+       UPDATES=http://download.opensuse.org/update/leap/$SPINVER/oss/
+elif [ "$SPIN" == "tumbleweed" ]; then
+        REPOSITORY=http://download.opensuse.org/tumbleweed/repo/oss/
+        UPDATES=http://download.opensuse.org/update/tumbleweed/
+ else
+       echo "unsupported spin"
+	   exit 1
+ fi
 
 EXTRAPKGS='vim iproute2 iputils net-tools procps less psmisc timezone aaa_base-extras'
 
 ZYPPER="zypper -v --root=$INSTALL --non-interactive --gpg-auto-import-keys "
 
 function bootstrap {
-	$ZYPPER addrepo --refresh $REPOSITORY openSUSE-oss
-	$ZYPPER addrepo --refresh $UPDATES openSUSE-updates
+	set -e
+	$ZYPPER addrepo --refresh -g $REPOSITORY openSUSE-oss
+	$ZYPPER addrepo --refresh -g $UPDATES openSUSE-updates
+	$ZYPPER refresh
 	$ZYPPER install --no-recommends aaa_base shadow
-	$ZYPPER install --no-recommends -t pattern minimal_base minimal_base-conflicts
-	$ZYPPER install -t pattern sw_management
+	$ZYPPER install --no-recommends patterns-base-base patterns-base-sw_management
 	$ZYPPER install $EXTRAPKGS
-
+	set +e
 }
 
 function configure-opensuse {

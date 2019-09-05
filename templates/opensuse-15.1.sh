@@ -1,6 +1,6 @@
 DISTNAME=suse
-SPIN=tumbleweed
-SPINVER=$(date +%Y%m%d)
+SPIN=leap
+SPINVER=15.1
 RELVER=$SPIN-$SPINVER
 
 . $INCLUDE/opensuse.sh
