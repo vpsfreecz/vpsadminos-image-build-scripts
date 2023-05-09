@@ -1,6 +1,16 @@
 vpsAdminOS Image Build Scripts
 ==============================
 
+## Deprecation notice
+
+This repository has been merged into vpsAdminOS:
+
+  https://github.com/vpsfreecz/vpsadminos
+
+Further development will take place there.
+
+## About
+
 This is a collection of scripts used to build and test container images, which
 are then used by [vpsAdminOS](http://vpsadminos.org) when creating new containers.
 Container image is a tarball with configuration and filesystems, see the
